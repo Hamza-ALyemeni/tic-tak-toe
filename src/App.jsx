@@ -30,7 +30,7 @@ function App() {
   const activePlayer = deriveActicePlayer(gameTurns); 
 
     
-  let gameBoard = intialGameBoard;
+  let gameBoard = [...intialGameBoard.map(array => [...array])];
 
   for (const turn of gameTurns) {
       const {square , player } = turn;
@@ -76,6 +76,10 @@ function App() {
     });
   }
 
+  function handleRestart() {
+    setgameTurns([]);
+  }
+
   return (
     <main>
       <div id="game-container">
@@ -83,7 +87,7 @@ function App() {
             <Player intialName="Hamza" symbol ="X" isActive = {activePlayer === 'X' }/>
             <Player intialName="ALI" symbol ="O" isActive = {activePlayer === 'O' }/>
         </ol>
-        {(winner || hasDraw) && <GameOver winner={winner} />}
+        {(winner || hasDraw) && <GameOver winner={winner} restart = {handleRestart} />}
         <GameBoard onSelectSquere = {handleSelectSquare} board={gameBoard}/>
       </div>
       <Log turns={gameTurns}/>
